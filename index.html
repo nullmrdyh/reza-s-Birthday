@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reza's Birthday</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&family=Montserrat:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --pink: #ffafcc;
+            --blue: #a2d2ff;
+            --pink-strong: #ff85a1;
+            --blue-strong: #74c0fc;
+            --wood: #c19a6b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            /* Background Gradasi Biru & Pink yang Kentara */
+            background: linear-gradient(-45deg, #ffc8dd, #ffffff, #a2d2ff, #ffafcc);
+            background-size: 400% 400%;
+            animation: gradientBG 8s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- PAGE 1: GAME --- */
+        #page1 {
+            height: 100vh; width: 100%;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            position: fixed; top: 0; left: 0; z-index: 100;
+            background: rgba(255, 255, 255, 0.3); /* Transparan agar gradasi body terlihat jelas */
+            text-align: center;
+            /* Glow Frame Biru-Pink di Pinggir Halaman */
+            box-shadow: inset 0 0 80px var(--blue-strong), inset 0 0 150px rgba(255, 255, 255, 0.5);
+        }
+
+        .reza-photo {
+            width: 100px; height: 100px;
+            border-radius: 50%; border: 4px solid white;
+            object-fit: cover; margin-bottom: 15px;
+            box-shadow: 0 0 25px var(--pink);
+        }
+
+        #tap-love {
+            font-size: 85px; cursor: pointer; user-select: none;
+            transition: transform 0.1s ease;
+            display: inline-block;
+            filter: drop-shadow(0 0 20px var(--pink-strong));
+        }
+
+        /* --- PAGE 2: MAIN CONTENT --- */
+        #page2 { display: none; padding-bottom: 100px; position: relative; z-index: 5; }
+
+        .header-title {
+            text-align: center; font-size: 0.8rem;
+            letter-spacing: 3px; color: #555;
+            padding-top: 40px; text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        #timer {
+            text-align: center; font-size: 2.5rem;
+            font-weight: 800; color: #ff4d6d;
+            padding: 10px 0 40px;
+            text-shadow: 2px 2px white;
+        }
+
+        .section-desc {
+            text-align: center; font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem; color: #333; margin-bottom: 20px;
+            text-shadow: 1px 1px white;
+        }
+
+        /* Video Glow Berwarna */
+        .video-wrapper {
+    width: 220px;              /* ukuran tetap (tidak ikut layar) */
+    aspect-ratio: 9 / 16;      /* proporsional 9:16 */
+    margin: 0 auto 60px;
+    border: 6px solid white;
+    border-radius: 15px;
+    box-shadow: 0 0 25px var(--blue);
+    overflow: hidden;
+}
+
+.video-wrapper video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;       /* penting: biar tidak kepotong & tetap proporsional */
+}
+        /* --- SURAT PALING AESTHETIC --- */
+        .aesthetic-paper {
+            background: #fff;
+            background-image: linear-gradient(#f0f0f0 1px, transparent 1px);
+            background-size: 100% 2.4rem;
+            padding: 50px 40px; margin: 0 auto 80px;
+            width: 85%; max-width: 500px;
+            border-radius: 2px;
+            /* Shadow mendalam: Bayangan hitam halus + Bayangan Pink tegas */
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.1), 15px 15px 0px var(--pink);
+            border-left: 6px solid var(--pink-strong);
+            position: relative;
+            transform: rotate(-1.5deg);
+        }
+
+        .letter-text {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.6rem; line-height: 2.4rem; color: #2c3e50;
+        }
+
+        /* Kabel & Lampu Natal (Banyak & Berwarna) */
+        .wire-container { width: 100%; height: 60px; margin-bottom: -15px; position: relative; }
+        .wire-svg { width: 100%; height: 100%; fill: none; stroke: #333; stroke-width: 1.5; opacity: 0.7; }
+        .bulb {
+            position: absolute; width: 10px; height: 16px;
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            top: 25px; animation: glow 0.8s infinite alternate;
+        }
+        @keyframes glow { from { opacity: 0.4; filter: brightness(1); } to { opacity: 1; filter: brightness(2); box-shadow: 0 0 15px currentColor; } }
+
+        /* Galeri Foto */
+        .moment-item-wrapper {
+            display: flex; flex-direction: column; align-items: center; margin-bottom: 60px;
+        }
+        .moment-item {
+            background: white; padding: 12px;
+            width: 280px; box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+        }
+        .wooden-clip {
+            width: 14px; height: 35px; background: var(--wood);
+            position: absolute; top: -18px; left: 50%;
+            transform: translateX(-50%); border-radius: 2px; z-index: 10;
+        }
+        .moment-item img { width: 100%; display: block; }
+        
+        /* Deskripsi di Bawah Foto */
+        .moment-desc-outside {
+            font-family: 'Dancing Script', cursive;
+            font-size: 1.4rem; color: #444;
+            margin-top: 15px; text-align: center;
+            font-weight: 600;
+        }
+
+        .moment-item-wrapper:nth-child(even) { margin-left: 30px; }
+        .moment-item-wrapper:nth-child(odd) { margin-right: 30px; }
+
+        .falling-heart {
+            position: fixed; top: -50px;
+            pointer-events: none; z-index: 99;
+            animation: fall linear forwards;
+        }
+        @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
+    </style>
+</head>
+<body>
+
+    <audio id="music" loop><source src="lagu.mp3" type="audio/mpeg"></audio>
+
+    <section id="page1">
+        <img src="reza.jpg" class="reza-photo">
+        <h1 style="font-family: 'Dancing Script'; font-size: 2.2rem; color: #222;">Haiii Muhammad Alfa Reza</h1>
+        <p style="font-size: 0.8rem; color: #555; margin: 10px 0 30px; letter-spacing: 2px; font-weight: 700;">TAP DI BAWAH YAA</p>
+        <div id="tap-love" onclick="handleTap()">❤️</div>
+    </section>
+
+    <section id="page2">
+        <h4 class="header-title">your birthday countdown</h4>
+        <div id="timer">00d 00h 00m 00s</div>
+
+        <p class="section-desc">Special video for you ✨</p>
+        <div class="video-wrapper">
+    <video controls autoplay loop muted>
+        <source src="video.mp4" type="video/mp4">
+    </video>
+</div>
+
+        <p class="section-desc">A letter from my heart 💌</p>
+        <div class="aesthetic-paper">
+            <div class="letter-text">
+                Dear <b>Reza</b>, <br><br>
+                Happy Birthday, Sayang! 🎂 Di umurmu yang sekarang, berharap kamu terus tumbuh jadi pribadi yang lebih baik, hal-hal buruk ditinggalkan, dan yang baik tetap dijaga. <br><br>
+                I’m grateful that you were born in this world, grateful to have you, grateful that you’re always here, and grateful that you understand me emotionally. It's all very precious to me, dan tetap dipertahankan yaa... <br><br>
+                Terima kasih juga untuk setiap hal kecil yang diusahakan untuk saya, just want you to know that I’m so, so proud of you. Bangga sekali sama kamu yang tidak gampang menyerah, yang terus mengusahakan dirimu sendiri dengan begitu hebatnya, yang selalu belajar dan mencoba jadi versi terbaik. It’s all such a beautiful effort.<br><br>
+                And last but not least, you don’t have to be anyone else to be perfect. Just be yourself, in your best version❤️ <br><br>
+                <span style="float: right;">With love, AM</span>
+                <div style="clear: both;"></div>
+            </div>
+        </div>
+
+        <p class="section-desc">Our beautiful memories 📸</p>
+        
+        <div class="gallery-container">
+            <div class="moment-item-wrapper">
+                <div class="wire-container">
+                    <svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none"><path d="M0,20 Q250,80 500,20" /></svg>
+                    <div class="bulb" style="left: 10%; color: #ff4d6d; background: #ff4d6d;"></div>
+                    <div class="bulb" style="left: 35%; color: #74c0fc; background: #74c0fc; animation-delay: 0.2s;"></div>
+                    <div class="bulb" style="left: 65%; color: #ff85a1; background: #ff85a1; animation-delay: 0.4s;"></div>
+                    <div class="bulb" style="left: 90%; color: #ffd700; background: #ffd700; animation-delay: 0.6s;"></div>
+                </div>
+                <div class="moment-item">
+                    <div class="wooden-clip"></div>
+                    <img src="foto1.jpg">
+                </div>
+                <p class="moment-desc-outside">"ingat ini nda? pas first date, berasa sekali kan canggungnya hihi"</p>
+            </div>
+
+            <div class="moment-item-wrapper">
+                <div class="wire-container">
+                    <svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none"><path d="M0,20 Q250,80 500,20" /></svg>
+                    <div class="bulb" style="left: 15%; color: #a2d2ff; background: #a2d2ff;"></div>
+                    <div class="bulb" style="left: 40%; color: #ff85a1; background: #ff85a1; animation-delay: 0.3s;"></div>
+                    <div class="bulb" style="left: 85%; color: #74c0fc; background: #74c0fc; animation-delay: 0.1s;"></div>
+                </div>
+                <div class="moment-item">
+                    <div class="wooden-clip"></div>
+                    <img src="foto2.jpg">
+                </div>
+                <p class="moment-desc-outside">"ke malino, ini pas first time jalan jauh barengg  ✨"</p>
+            </div>
+
+            <div class="moment-item-wrapper">
+                <div class="wire-container"><svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none"><path d="M0,20 Q250,80 500,20" /></svg>
+                    <div class="bulb" style="left: 20%; color: #ffd700; background: #ffd700;"></div>
+                    <div class="bulb" style="left: 50%; color: #ff4d6d; background: #ff4d6d; animation-delay: 0.2s;"></div>
+                    <div class="bulb" style="left: 80%; color: #74c0fc; background: #74c0fc; animation-delay: 0.5s;"></div>
+                </div>
+                <div class="moment-item"><div class="wooden-clip"></div><img src="foto3.jpg"></div>
+                <p class="moment-desc-outside">"our first concertt!! seru bangett tapi takut post ini hehe"</p>
+            </div>
+
+            <div class="moment-item-wrapper">
+                <div class="wire-container"><svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none"><path d="M0,20 Q250,80 500,20" /></svg>
+                    <div class="bulb" style="left: 30%; color: #a2d2ff; background: #a2d2ff;"></div>
+                    <div class="bulb" style="left: 70%; color: #ff85a1; background: #ff85a1; animation-delay: 0.2s;"></div>
+                </div>
+                <div class="moment-item"><div class="wooden-clip"></div><img src="foto4.jpg"></div>
+                <p class="moment-desc-outside">"ini memory yang nda bakal dilupa sihh, makasih sudah penuhi rasa penasarankuu❤️"</p>
+            </div>
+
+            <div class="moment-item-wrapper">
+                <div class="wire-container"><svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none"><path d="M0,20 Q250,80 500,20" /></svg>
+                    <div class="bulb" style="left: 10%; color: #ff4d6d; background: #ff4d6d;"></div>
+                    <div class="bulb" style="left: 45%; color: #ffd700; background: #ffd700; animation-delay: 0.1s;"></div>
+                    <div class="bulb" style="left: 90%; color: #74c0fc; background: #74c0fc; animation-delay: 0.7s;"></div>
+                </div>
+                <div class="moment-item"><div class="wooden-clip"></div><img src="foto5.jpg"></div>
+                <p class="moment-desc-outside">"ini konser keduaa! suka bgt karena di traktir hihi"</p>
+            </div>
+
+            <div class="moment-item-wrapper">
+                <div class="wire-container"><svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none"><path d="M0,20 Q250,80 500,20" /></svg>
+                    <div class="bulb" style="left: 40%; color: #a2d2ff; background: #a2d2ff;"></div>
+                    <div class="bulb" style="left: 60%; color: #ff4d6d; background: #ff4d6d; animation-delay: 0.3s;"></div>
+                </div>
+                <div class="moment-item"><div class="wooden-clip"></div><img src="foto6.jpg"></div>
+                <p class="moment-desc-outside">"ini kaku sekalii sumpahh, sama sama mati gaya ahaha"</p>
+            </div>
+            <div class="moment-item-wrapper">
+    <div class="wire-container">
+        <svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
+            <path d="M0,20 Q250,80 500,20" />
+        </svg>
+        <div class="bulb" style="left: 20%; color: #ff85a1; background: #ff85a1;"></div>
+        <div class="bulb" style="left: 60%; color: #74c0fc; background: #74c0fc; animation-delay: 0.3s;"></div>
+    </div>
+    <div class="moment-item">
+        <div class="wooden-clip"></div>
+        <img src="foto7.jpg">
+    </div>
+    <p class="moment-desc-outside">"favorite photo, karena lucuuuu💕"</p>
+</div>
+
+<div class="moment-item-wrapper">
+    <div class="wire-container">
+        <svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
+            <path d="M0,20 Q250,80 500,20" />
+        </svg>
+        <div class="bulb" style="left: 30%; color: #ffd700; background: #ffd700;"></div>
+        <div class="bulb" style="left: 80%; color: #ff4d6d; background: #ff4d6d; animation-delay: 0.2s;"></div>
+    </div>
+    <div class="moment-item">
+        <div class="wooden-clip"></div>
+        <img src="foto8.jpg">
+    </div>
+    <p class="moment-desc-outside">"Bangga bangett disinii!"</p>
+</div>
+
+<div class="moment-item-wrapper">
+    <div class="wire-container">
+        <svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
+            <path d="M0,20 Q250,80 500,20" />
+        </svg>
+        <div class="bulb" style="left: 15%; color: #a2d2ff; background: #a2d2ff;"></div>
+        <div class="bulb" style="left: 70%; color: #ff85a1; background: #ff85a1; animation-delay: 0.4s;"></div>
+    </div>
+    <div class="moment-item">
+        <div class="wooden-clip"></div>
+        <img src="foto9.jpg">
+    </div>
+    <p class="moment-desc-outside">"paint datee❤️"</p>
+</div>
+<div class="moment-item-wrapper">
+    <div class="wire-container">
+        <svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
+            <path d="M0,20 Q250,80 500,20" />
+        </svg>
+        <div class="bulb" style="left: 20%; color: #ff4d6d; background: #ff4d6d;"></div>
+        <div class="bulb" style="left: 80%; color: #74c0fc; background: #74c0fc; animation-delay: 0.2s;"></div>
+    </div>
+    <div class="moment-item">
+        <div class="wooden-clip"></div>
+        <img src="foto10.jpg">
+    </div>
+    <p class="moment-desc-outside">"Ini pas first time nonton anime bioskop, makasi udah ditemanii💖"</p>
+</div>
+
+<div class="moment-item-wrapper">
+    <div class="wire-container">
+        <svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
+            <path d="M0,20 Q250,80 500,20" />
+        </svg>
+        <div class="bulb" style="left: 25%; color: #ffd700; background: #ffd700;"></div>
+        <div class="bulb" style="left: 65%; color: #ff85a1; background: #ff85a1; animation-delay: 0.3s;"></div>
+    </div>
+    <div class="moment-item">
+        <div class="wooden-clip"></div>
+        <img src="foto11.jpg">
+    </div>
+    <p class="moment-desc-outside">"Apa ini HAHAHAH, nostalgia pas MA padahal nda sekenal itu dulu"</p>
+</div>
+
+<div class="moment-item-wrapper">
+    <div class="wire-container">
+        <svg class="wire-svg" viewBox="0 0 500 100" preserveAspectRatio="none">
+            <path d="M0,20 Q250,80 500,20" />
+        </svg>
+        <div class="bulb" style="left: 15%; color: #a2d2ff; background: #a2d2ff;"></div>
+        <div class="bulb" style="left: 70%; color: #ff85a1; background: #ff85a1; animation-delay: 0.4s;"></div>
+    </div>
+    <div class="moment-item">
+        <div class="wooden-clip"></div>
+        <img src="foto12.jpg">
+    </div>
+    <p class="moment-desc-outside">"Lasttt, little Reza & Ainul ❤️"</p>
+</div>
+
+        </div>
+
+        <div style="height: 100px;"></div>
+    </section>
+
+    <script>
+        function spawnHeart() {
+            const h = document.createElement('div');
+            h.className = 'falling-heart';
+            h.innerHTML = '❤️';
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.fontSize = Math.random() * 20 + 15 + 'px';
+            h.style.opacity = Math.random() * 0.6 + 0.3;
+            h.style.animationDuration = Math.random() * 3 + 2 + 's';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 5000);
+        }
+        setInterval(spawnHeart, 400);
+
+        let taps = 0;
+        function handleTap() {
+            taps++;
+            const btn = document.getElementById('tap-love');
+            btn.style.transform = 'scale(1.7)';
+            setTimeout(() => btn.style.transform = 'scale(1)', 100);
+
+            if(taps >= 15) {
+                document.getElementById('music').play();
+                document.getElementById('page1').style.transition = '0.5s';
+                document.getElementById('page1').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('page1').style.display = 'none';
+                    document.getElementById('page2').style.display = 'block';
+                    window.scrollTo(0,0);
+                }, 500);
+            }
+        }
+
+        function updateTimer() {
+            const target = new Date("March 23, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((diff % (1000 * 60)) / 1000);
+            document.getElementById('timer').innerText = `${d}d ${h}h ${m}m ${s}s`;
+        }
+        setInterval(updateTimer, 1000);
+    </script>
+</body>
+</html>
